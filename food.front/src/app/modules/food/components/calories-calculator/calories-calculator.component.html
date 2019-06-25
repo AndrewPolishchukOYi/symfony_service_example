@@ -1,0 +1,51 @@
+<mat-card>
+  <div class="preloader" *ngIf="onLoad">
+    <mat-spinner></mat-spinner>
+  </div>
+  <mat-card-content>
+    <h3>Calories calculator</h3>
+    <form [formGroup]="calculatorForm" (ngSubmit)="onSubmit()">
+      <div style="display: flex; flex-direction: column">
+        <mat-form-field>
+          <input matInput formControlName="query" placeholder="What you eat today?">
+          <mat-error *ngIf="calculatorForm.get('query').touched && calculatorForm.get('query').hasError('required')">
+            Required field
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput type="number" formControlName="calories" placeholder="Normal day calories">
+          <mat-error *ngIf="calculatorForm.get('calories').touched && calculatorForm.get('calories').hasError('required')">
+            Required field
+          </mat-error>
+        </mat-form-field>
+
+        <button [disabled]="calculatorForm.invalid" mat-raised-button color="primary">Calculate</button>
+      </div>
+    </form>
+  </mat-card-content>
+
+</mat-card>
+
+
+<mat-card style="margin-top: 50px;" *ngIf="calories">
+  <mat-card-content>
+    <div class="calories-result" *ngIf="isNormal">
+      <div class="calories-result__message">
+        You daily calories is normal
+      </div>
+      <div class="calories-result__icon">
+        <mat-icon inline="true">insert_emoticon</mat-icon>
+      </div>
+    </div>
+    <div class="calories-result" *ngIf="!isNormal">
+      <div class="calories-result__message">
+        calories exceed the norm
+      </div>
+      <div class="calories-result__icon">
+        <mat-icon inline="true">error_outline</mat-icon>
+      </div>
+    </div>
+  </mat-card-content>
+
+</mat-card>

@@ -1,0 +1,28 @@
+# Read the documentation: https://symfony.com/doc/master/bundles/FOSRestBundle/index.html
+fos_rest:
+    param_fetcher_listener: true
+    body_listener:
+        array_normalizer: fos_rest.normalizer.camel_keys
+    view:
+        view_response_listener: 'force'
+        formats:
+            json: true
+        templating_formats:
+            html: false
+        force_redirects:
+            html: false
+        failed_validation: HTTP_BAD_REQUEST
+    routing_loader:
+        include_format: false
+        default_format: json
+    serializer:
+        serialize_null: false
+    access_denied_listener:
+        json: true
+    exception:
+        enabled: true
+        messages:
+            Symfony\Component\HttpKernel\Exception\BadRequestHttpException: true
+    format_listener:
+        rules:
+            - { path: '^/', priorities: ['json'], prefer_extension: false }
